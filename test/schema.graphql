@@ -1,0 +1,70 @@
+directive @ownResolver on FIELD_DEFINITION
+
+scalar Date
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Query {
+  me: User!
+  user(id: ID!): User!
+  allUsers: [User]
+  search(term: String!): [SearchResult!]!
+  myChats: [Chat!]!
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+interface Node {
+  id: ID!
+}
+
+union SearchResult = User | Chat | ChatMessage
+
+input Xyz {
+  id: ID!
+}
+
+type File {
+  id: ID!
+}
+
+type Directory {
+  id: ID!
+  files: [File!] @ownResolver
+}
+
+type User implements Node {
+  id: ID!
+  username(input: Xyz): String!
+  email: String!
+  role: Role! @ownResolver
+}
+
+type Chat implements Node {
+  id: ID!
+  users: [User!]! @ownResolver
+  messages: [ChatMessage!]! @ownResolver
+}
+
+type ChatMessage implements Node {
+  id: ID!
+  content: String! @ownResolver
+  time: Date! @ownResolver
+  user: User! @ownResolver
+}
+
+type Mutation {
+  xx(arg: ID, arg2: String): ID!
+}
+
+type Subscription {
+  yy: ID!
+  zz: String!
+}

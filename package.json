@@ -1,0 +1,20 @@
+{
+  "name": "k-graphql-gen",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -w test -w src -e ts,ejs,graphql,yaml -x \"tsc && yarn gen || exit 1\"",
+    "gen": "graphql-codegen --config test/codegen.yml",
+    "build": "rm -rf dist && tsc"
+  },
+  "dependencies": {
+    "graphql": "^16.3.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "2.4.7",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.2"
+  }
+}

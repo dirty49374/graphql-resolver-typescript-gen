@@ -1,0 +1,7 @@
+# package root 기준으로 작성한다.
+overwrite: true
+schema: ./test/schema.graphql
+generates:
+  ./generated/graphql.ts:
+    plugins:
+      - "./dist/index.js"
